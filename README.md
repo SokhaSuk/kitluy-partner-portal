@@ -183,3 +183,5 @@ Status vocabulary:
 - `LOCAL_ONLY` - implemented, but intentionally limited to this browser/profile.
 - `BLOCKED_EXTERNAL` - needs a backend, provider, credentials, policy, or contract.
 - `NOT RUN` - no runtime result exists; do not infer one from a build.
+#   k i t l u y - p a r t n e r - p o r t a l  
+ 
