@@ -1,0 +1,361 @@
+@import 'tailwindcss';
+
+/* Theme flips via [data-theme] on the app root, not a media query. */
+@custom-variant dark ([data-theme='dark'] &);
+
+/* --------------------------------------------------------------- palette */
+:root,
+[data-theme='light'] {
+  --bg: #f6f8fb;
+  --panel: #ffffff;
+  --panel-2: #fbfcfe;
+  --inset: #f2f5f9;
+  --border: #e5eaf1;
+  --border-strong: #d5dce7;
+  --text: #162033;
+  --muted: #647087;
+  --faint: #98a3b5;
+  --hover: #f2f5fa;
+  --active: #e9f3fb;
+  --shadow: 0 1px 2px rgba(22, 32, 51, 0.04), 0 5px 16px rgba(22, 32, 51, 0.035);
+  --shadow-lg: 0 18px 50px rgba(22, 32, 51, 0.14), 0 3px 10px rgba(22, 32, 51, 0.06);
+  --accent: #0788ce;
+  --accent-soft: #e8f5fc;
+  --accent-text: #ffffff;
+  --primary: #162033;
+  --primary-text: #ffffff;
+  --scrim: rgba(15, 23, 42, 0.42);
+  --ring: rgba(7, 136, 206, 0.3);
+  --gold: #f5a623;
+  --purple: #8b5cf6;
+  --ok-bg: #e6f7ee;
+  --ok-fg: #0e9f6e;
+  --info-bg: #e3f1fe;
+  --info-fg: #0c7fd1;
+  --warn-bg: #fdf0d9;
+  --warn-fg: #b27410;
+  --neutral-bg: #eef1f5;
+  --neutral-fg: #64748b;
+  --danger-bg: #fdeaea;
+  --danger-fg: #dc2626;
+  --purple-bg: #f0eafe;
+  --purple-fg: #7c4ddb;
+  --gold-bg: #fdf3df;
+  --gold-fg: #b9831a;
+}
+
+[data-theme='dark'] {
+  --bg: #0a0e16;
+  --panel: #121821;
+  --panel-2: #161d28;
+  --inset: #1b2430;
+  --border: #222c3a;
+  --border-strong: #2c3848;
+  --text: #eef2f7;
+  --muted: #94a3b8;
+  --faint: #5d6b7e;
+  --hover: #1a2230;
+  --active: #222d3d;
+  --shadow: 0 1px 2px rgba(0, 0, 0, 0.4);
+  --shadow-lg: 0 14px 40px rgba(0, 0, 0, 0.55), 0 2px 8px rgba(0, 0, 0, 0.4);
+  --accent: #38b6f5;
+  --accent-soft: #102a3a;
+  --accent-text: #07131c;
+  --primary: #eef2f7;
+  --primary-text: #0a0e16;
+  --scrim: rgba(0, 0, 0, 0.64);
+  --ring: rgba(56, 182, 245, 0.38);
+  --gold: #f5a623;
+  --purple: #a78bfa;
+  --ok-bg: #0e2a1d;
+  --ok-fg: #3fce86;
+  --info-bg: #0d2740;
+  --info-fg: #56aef0;
+  --warn-bg: #322412;
+  --warn-fg: #e0a24a;
+  --neutral-bg: #1f2937;
+  --neutral-fg: #94a3b8;
+  --danger-bg: #351819;
+  --danger-fg: #f06b6b;
+  --purple-bg: #221a3a;
+  --purple-fg: #b69af3;
+  --gold-bg: #2e2410;
+  --gold-fg: #e0a943;
+}
+
+/* ------------------------------------------------------- keyframes */
+@keyframes kfade {
+  from {
+    transform: translateY(5px);
+  }
+  to {
+    transform: none;
+  }
+}
+@keyframes kgrow {
+  from {
+    transform: scaleY(0);
+  }
+  to {
+    transform: scaleY(1);
+  }
+}
+@keyframes kpulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.35;
+  }
+}
+@keyframes kfadein {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@keyframes kslidein {
+  from {
+    transform: translateX(28px);
+    opacity: 0;
+  }
+  to {
+    transform: none;
+    opacity: 1;
+  }
+}
+
+/* Toasts rise from the bottom edge they are anchored to, and leave the same way
+   they came so a dismissed one never reads as a new one arriving. */
+@keyframes ktoastin {
+  from {
+    transform: translateY(14px) scale(0.96);
+    opacity: 0;
+  }
+  to {
+    transform: none;
+    opacity: 1;
+  }
+}
+@keyframes ktoastout {
+  from {
+    transform: none;
+    opacity: 1;
+  }
+  to {
+    transform: translateY(6px) scale(0.97);
+    opacity: 0;
+  }
+}
+
+/* A dialog that scales up from just under its resting size reads as "this came
+   from the button you pressed"; one that fades in flat reads as a page load. */
+@keyframes kpopin {
+  from {
+    transform: translateY(10px) scale(0.96);
+    opacity: 0;
+  }
+  to {
+    transform: none;
+    opacity: 1;
+  }
+}
+
+@keyframes kspin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes kshimmer {
+  to {
+    transform: translateX(100%);
+  }
+}
+
+/* Indeterminate bar: a segment that sweeps, for waits with no known duration. */
+@keyframes kbar {
+  0% {
+    transform: translateX(-100%) scaleX(0.35);
+  }
+  50% {
+    transform: translateX(20%) scaleX(0.6);
+  }
+  100% {
+    transform: translateX(100%) scaleX(0.35);
+  }
+}
+
+/* Reserved for rejected input. Motion is the fastest way to say "not that one"
+   without moving the user's eye off the field they are already looking at. */
+@keyframes kshake {
+  10%,
+  90% {
+    transform: translateX(-1px);
+  }
+  20%,
+  80% {
+    transform: translateX(2px);
+  }
+  30%,
+  50%,
+  70% {
+    transform: translateX(-4px);
+  }
+  40%,
+  60% {
+    transform: translateX(4px);
+  }
+}
+
+/* -------------------------------------------------------------- tokens
+   `inline` is load-bearing: it substitutes var(--panel) straight into each
+   utility instead of adding a :root indirection var, which would freeze at
+   the light value and never follow [data-theme]. */
+@theme inline {
+  --font-sans: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI',
+    'Noto Sans Khmer', sans-serif;
+
+  --color-bg: var(--bg);
+  --color-panel: var(--panel);
+  --color-panel-2: var(--panel-2);
+  --color-inset: var(--inset);
+  --color-border: var(--border);
+  --color-border-strong: var(--border-strong);
+  --color-text: var(--text);
+  --color-muted: var(--muted);
+  --color-faint: var(--faint);
+  --color-hover: var(--hover);
+  --color-active: var(--active);
+
+  --color-accent: var(--accent);
+  --color-accent-soft: var(--accent-soft);
+  --color-accent-text: var(--accent-text);
+  --color-primary: var(--primary);
+  --color-primary-text: var(--primary-text);
+  --color-gold: var(--gold);
+  --color-purple: var(--purple);
+
+  --color-ok-bg: var(--ok-bg);
+  --color-ok-fg: var(--ok-fg);
+  --color-info-bg: var(--info-bg);
+  --color-info-fg: var(--info-fg);
+  --color-warn-bg: var(--warn-bg);
+  --color-warn-fg: var(--warn-fg);
+  --color-neutral-bg: var(--neutral-bg);
+  --color-neutral-fg: var(--neutral-fg);
+  --color-danger-bg: var(--danger-bg);
+  --color-danger-fg: var(--danger-fg);
+  --color-purple-bg: var(--purple-bg);
+  --color-purple-fg: var(--purple-fg);
+  --color-gold-bg: var(--gold-bg);
+  --color-gold-fg: var(--gold-fg);
+
+  --shadow-card: var(--shadow);
+  --shadow-pop: var(--shadow-lg);
+
+  /* Entering motion decelerates into place; leaving motion accelerates away.
+     Anything that enters and exits should use the pair, not one curve for both. */
+  --ease-entrance: cubic-bezier(0.32, 0.72, 0, 1);
+  --ease-exit: cubic-bezier(0.4, 0, 1, 1);
+
+  --animate-kfade: kfade 0.3s ease;
+  --animate-kgrow: kgrow 0.5s ease both;
+  --animate-kpulse: kpulse 1.6s ease infinite;
+  --animate-kfadein: kfadein 0.2s ease;
+  --animate-kslidein: kslidein 0.28s cubic-bezier(0.32, 0.72, 0, 1);
+
+  /* Toast exit is deliberately shorter than its entrance: the user has already
+     read it, and TOAST_EXIT_MS in PortalContext must stay >= this duration. */
+  --animate-ktoastin: ktoastin 0.26s cubic-bezier(0.32, 0.72, 0, 1) both;
+  --animate-ktoastout: ktoastout 0.16s cubic-bezier(0.4, 0, 1, 1) both;
+  --animate-kpopin: kpopin 0.22s cubic-bezier(0.32, 0.72, 0, 1) both;
+  --animate-kspin: kspin 0.7s linear infinite;
+  --animate-kbar: kbar 1.15s ease-in-out infinite;
+  --animate-kshake: kshake 0.4s ease both;
+}
+
+/* ---------------------------------------------------------------- base */
+@layer base {
+  * {
+    box-sizing: border-box;
+  }
+  html,
+  body {
+    margin: 0;
+    padding: 0;
+  }
+  body {
+    font-family: var(--font-sans);
+    background: var(--bg);
+    color: var(--text);
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+  button,
+  input {
+    font: inherit;
+  }
+  ::selection {
+    background: var(--accent-soft);
+    color: var(--text);
+  }
+  ::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: var(--faint);
+    border-radius: 8px;
+    border: 3px solid transparent;
+    background-clip: content-box;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: var(--muted);
+    background-clip: content-box;
+  }
+}
+
+/* ---------------------------------------------------------- components */
+@layer components {
+  /* Skeleton placeholder. The sweep is tinted with --text rather than a fixed
+     white, so it stays a *highlight* in both themes — a white sweep would read
+     as a dark smear once --inset goes darker than the panel behind it. */
+  .skeleton {
+    position: relative;
+    overflow: hidden;
+    background: var(--inset);
+  }
+  .skeleton::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    transform: translateX(-100%);
+    background: linear-gradient(
+      90deg,
+      transparent,
+      color-mix(in srgb, var(--text) 7%, transparent),
+      transparent
+    );
+    animation: kshimmer 1.5s infinite;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+  /* The clamp above would park the sweep mid-element as a static smear. Hiding
+     it leaves a plain --inset block, which is what a skeleton should be here. */
+  .skeleton::after {
+    display: none;
+  }
+}
